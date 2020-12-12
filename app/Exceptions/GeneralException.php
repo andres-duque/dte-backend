@@ -5,7 +5,7 @@ namespace App\Exceptions;
 class GeneralException extends \Exception{
     private $data;
 
-    public function __construct($message,$data){
+    public function __construct($message,$data=[]){
 
         parent::__construct($message);
         $this->data = $data;

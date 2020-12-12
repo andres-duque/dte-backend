@@ -17,4 +17,10 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->post('/user/login', 'UserController@loginUser');
+
 $router->post('/user/register', 'UserController@registerUser');
+
+$router->group(['middleware' => 'jwt'], function () use ($router) {
+
+});
