@@ -52,4 +52,75 @@ class Validation{
         }
     }
 
+    public static function validateNumberRange(&$error,$body,$key,$range,$required=false){
+        if(isset($body[$key])){
+            if(is_numeric($body[$key])){
+                if($body[$key]>$range["lte"] || $body[$key]<$range["gte"]){
+                    $error[] = [
+                        "message"=>"Parámetro $key inválido, el valor debe ser mayor a  ".$range["gte"]." y menor a  ".$range["lte"]
+                    ];
+                }
+            }else{
+                $error[] = [
+                    "message"=>"Parámetro $key inválido, el valor debe ser numérico"
+                ];
+            }
+
+        }else{
+            if($required){
+                $error[] = [
+                    "message"=>"Parámetro $key requerido"
+                ];
+            }
+        }
+    }
+
+    public static function validateIsNumeric(&$error,$body,$key,$required=false){
+        if(isset($body[$key])){
+            if(!is_numeric($body[$key])){
+                $error[] = [
+                    "message"=>"Parámetro $key inválido, el valor debe ser numérico"
+                ];
+            }elseif ($body[$key]<0){
+                $error[] = [
+                    "message"=>"Parámetro $key inválido, el valor debe ser mayor a 0"
+                ];
+            }
+        }else{
+            if($required){
+                $error[] = [
+                    "message"=>"Parámetro $key requerido"
+                ];
+            }
+        }
+    }
+
+    public static function validateIsBoolean($error,$body,$key,$required=false){
+        if(isset($body[$key])){
+            if(!is_bool($body[$key])){
+                $error[] = [
+                    "message"=>"Parámetro $key inválido, el valor debe ser booleano"
+                ];
+            }
+
+        }else{
+            if($required){
+                $error[] = [
+                    "message"=>"Parámetro $key requerido"
+                ];
+            }
+        }
+    }
+
+    public static function validateIsSet($data,$key,$default=""){
+
+        $content = $default;
+
+        if (isset($data[$key])) {
+            $content=$data[$key];
+        }
+
+        return $content;
+    }
+
 }

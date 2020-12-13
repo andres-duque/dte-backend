@@ -22,7 +22,7 @@ class LoginService{
             "iss"=>"dteBackend",
             "sub"=>$user->id,
             "iat"=>time(),
-            "exp"=>time() + 60 * 2,
+            "exp"=>time() + 60 * 60,
         ];
 
         $token = JWT::encode($tokenPayload,env("JWT_KEY"));

@@ -25,7 +25,7 @@ class JWTMiddleware
                 throw  new \Exception("Authorization invalid");
             }
             $payload = JWT::decode($bearer[1], env('JWT_KEY'), array('HS256'));
-            $request->request->add(["userId"=>$payload]);
+            $request->request->add(["userId"=>$payload->sub]);
         }catch(\Exception $ex){
             return response('Unauthorized.', 401);
         }
