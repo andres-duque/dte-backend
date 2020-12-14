@@ -10,6 +10,7 @@ class Dte extends Model {
         'email',
         'buyer_phone',
         'buyer_name',
+        'buyer_document',
         'discount_rate',
         'item_name',
         'itemDescription',

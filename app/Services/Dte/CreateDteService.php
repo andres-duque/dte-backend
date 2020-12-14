@@ -10,7 +10,6 @@ class CreateDteService{
     public static function create($body){
 
         $email = $body["email"];
-        $buyerName = $body["buyerName"];
         $itemName = $body["itemName"];
         $itemQuantity = $body["itemQuantity"];
         $itemAmount = $body["itemAmount"];
@@ -20,6 +19,8 @@ class CreateDteService{
 
         // fill optionals params
         $buyerPhone = Validation::validateIsSet($body,'buyerPhone');
+        $buyerDocument = Validation::validateIsSet($body,'buyerDocument');
+        $buyerName = Validation::validateIsSet($body,'buyerName',0);
         $itemDescription = Validation::validateIsSet($body,'itemDescription');
         $discountRate = Validation::validateIsSet($body,'discountRate',0);
         $iva = Validation::validateIsSet($body,'iva',false);
@@ -38,6 +39,7 @@ class CreateDteService{
         $dte->email =  $email;
         $dte->buyer_name = $buyerName;
         $dte->buyer_phone = $buyerPhone;
+        $dte->buyer_document = $buyerDocument;
         $dte->discount_rate = $discountRate;
         $dte->item_name = $itemName;
         $dte->item_description = $itemDescription;

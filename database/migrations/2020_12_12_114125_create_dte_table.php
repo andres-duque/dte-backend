@@ -19,6 +19,7 @@ class CreateDteTable extends Migration
             $table->string('email');
             $table->string('buyer_phone');
             $table->string('buyer_name');
+            $table->string('buyer_document');
             $table->float('discount_rate');
             $table->string('item_name');
             $table->string('item_description');
