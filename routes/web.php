@@ -23,4 +23,5 @@ $router->post('/user/register', 'UserController@registerUser');
 
 $router->group(['middleware' => 'jwt'], function () use ($router) {
     $router->post('/dte/create', 'DteController@createDte');
+    $router->post('/dte/list', 'DteController@listDte');
 });
