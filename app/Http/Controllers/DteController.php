@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helper\GeneralResponse;
+use App\Services\Dte\ListDteService;
 use App\Services\Dte\ValidationCreateDte;
 use App\Services\Dte\CreateDteService;
 use Laravel\Lumen\Routing\Controller as BaseController;
@@ -19,6 +20,17 @@ class DteController extends BaseController
             ValidationCreateDte::validate($body);
             $dte = CreateDteService::create($body);
             return GeneralResponse::buildResponse("true","Factura creada con éxito",[$dte]);
+        }catch (GeneralException $e){
+            return GeneralResponse::buildResponse(false,$e->getMessage(),$e->getData());
+        }
+    }
+
+    public function listDte(Request $request){
+
+        try{
+            $body = $request->request->all();
+            $dte = ListDteService::listDte($body);
+            return GeneralResponse::buildResponse("true","Facturas listadas con éxito",[$dte]);
         }catch (GeneralException $e){
             return GeneralResponse::buildResponse(false,$e->getMessage(),$e->getData());
         }
