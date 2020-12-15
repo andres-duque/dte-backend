@@ -28,4 +28,6 @@ $router->post('/dte/pay','DteController@payDte');
 $router->group(['middleware' => 'jwt'], function () use ($router) {
     $router->post('/dte/create', 'DteController@createDte');
     $router->post('/dte/list', 'DteController@listDte');
+    $router->get('/dte/list/frequency/{frequency}', 'DteController@listDteByFrequency');
+    $router->get('/user/balance', 'UserController@getBalance');
 });

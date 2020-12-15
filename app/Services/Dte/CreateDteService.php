@@ -2,8 +2,11 @@
 
 namespace App\Services\Dte;
 
+use App\Mail\DteRequestMail;
 use App\Models\Dte;
+use App\Models\User;
 use App\Helper\Validation;
+use Illuminate\Support\Facades\Mail;
 
 class CreateDteService{
 
@@ -52,6 +55,16 @@ class CreateDteService{
         $dte->total_amount = $totalAmount;
         $dte->user_id = $userId;
         $dte->save();
+
+        $user = User::find($userId);
+
+        $emailRequest = new \stdClass();
+        $emailRequest->name = $user->firstName." ".$user->lastName;
+        $emailRequest->type = $dte->item_type;
+        $emailRequest->itemName = $dte->item_name;
+        $emailRequest->amount = $dte->total_amount;
+        $emailRequest->link = env("PAY_PAGE_URL").$dte->token;
+        Mail::to($dte->email)->send(new DteRequestMail($emailRequest));
 
         return $dte;
     }

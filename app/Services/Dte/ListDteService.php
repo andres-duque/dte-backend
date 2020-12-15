@@ -4,7 +4,7 @@ namespace App\Services\Dte;
 
 use App\Exceptions\GeneralException;
 use App\Models\Dte;
-use App\Helper\Validation;
+use Illuminate\Support\Facades\DB;
 
 class ListDteService{
 
@@ -25,5 +25,15 @@ class ListDteService{
 
         return $dte;
 
+    }
+
+    public static function listDteByFrequency($userId,$frequency){
+        $dteQuery = Dte::where('user_id',$userId);
+
+        if($frequency=="daily"){
+            $dteQuery->whereRaw('DATE(created_at) =  DATE(NOW())');
+        }
+
+        return $dteQuery->orderBy('created_at', 'ASC')->get();
     }
 }

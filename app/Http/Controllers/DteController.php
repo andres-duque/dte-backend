@@ -6,6 +6,7 @@ use App\Helper\GeneralResponse;
 use App\Services\Dte\ListDteService;
 use App\Services\Dte\PayDteService;
 use App\Services\Dte\ValidationPayDte;
+use App\Services\Dte\ValidationCreateDte;
 use App\Services\Dte\CreateDteService;
 use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
@@ -37,6 +38,16 @@ class DteController extends BaseController
         }
     }
 
+    public function listDteByFrequency(Request $request,$frequency){
+        try{
+            $body = $request->request->all();
+            $dte = ListDteService::listDteByFrequency($body["userId"],$frequency);
+            return GeneralResponse::buildResponse("true","Facturas listadas con éxito",$dte);
+        }catch (GeneralException $e){
+            return GeneralResponse::buildResponse(false,$e->getMessage(),$e->getData());
+        }
+    }
+
     public function getDteByToken(Request $request,$token){
         try{
             $dte = ListDteService::listDteByToken($token);
@@ -53,7 +64,7 @@ class DteController extends BaseController
             $body["ip"] = $request->ip();
             ValidationPayDte::validate($body);
             $dte = PayDteService::pay($body);
-            return GeneralResponse::buildResponse("true","Factura creada con éxito",[$dte]);
+            return GeneralResponse::buildResponse("true","Factura pagada con éxito",[$dte]);
         }catch (GeneralException $e){
             return GeneralResponse::buildResponse(false,$e->getMessage(),$e->getData());
         }
