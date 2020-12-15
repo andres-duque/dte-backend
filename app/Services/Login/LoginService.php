@@ -30,6 +30,7 @@ class LoginService{
         return [
             "firstName"=>$user->firstName,
             "lastName"=>$user->lastName,
+            "balance"=>$user->balance,
             "token"=>$token
         ];
 
