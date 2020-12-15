@@ -16,3 +16,18 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->post('/user/login', 'UserController@loginUser');
+
+$router->post('/user/register', 'UserController@registerUser');
+
+$router->get('/dte/token/{token}','DteController@getDteByToken');
+
+$router->post('/dte/pay','DteController@payDte');
+
+$router->group(['middleware' => 'jwt'], function () use ($router) {
+    $router->post('/dte/create', 'DteController@createDte');
+    $router->post('/dte/list', 'DteController@listDte');
+    $router->get('/dte/list/frequency/{frequency}', 'DteController@listDteByFrequency');
+    $router->get('/user/balance', 'UserController@getBalance');
+});
